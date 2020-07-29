@@ -5,6 +5,8 @@
 #include <regex>
 #include <string>
 
+#include "processor.h"
+
 namespace LinuxParser {
 // Paths
 const std::string kProcDirectory{"/proc/"};
@@ -19,14 +21,15 @@ const std::string kOSPath{"/etc/os-release"};
 const std::string kPasswordPath{"/etc/passwd"};
 
 // System
-float MemoryUtilization();
+float MemoryUtilization(float kernel_version);
 long UpTime();
 std::vector<int> Pids();
 int TotalProcesses();
 int RunningProcesses();
 std::string OperatingSystem();
 std::string Kernel();
-
+float Kernel_version(std::string kernel_string);
+int parseStat(std::string key);
 // CPU
 enum CPUStates {
   kUser_ = 0,
@@ -40,7 +43,7 @@ enum CPUStates {
   kGuest_,
   kGuestNice_
 };
-std::vector<std::string> CpuUtilization();
+std::vector<int> CpuUtilization();
 long Jiffies();
 long ActiveJiffies();
 long ActiveJiffies(int pid);
@@ -52,6 +55,9 @@ std::string Ram(int pid);
 std::string Uid(int pid);
 std::string User(int pid);
 long int UpTime(int pid);
+std::string parsePStatus(std::string iKey, int pid);
+std::string parsePStat(int column, int pid);
+float CpuUtilization(int pid);
 };  // namespace LinuxParser
 
 #endif

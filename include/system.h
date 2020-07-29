@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 
+#include "linux_parser.h"
 #include "process.h"
 #include "processor.h"
 
@@ -20,8 +21,11 @@ class System {
 
   // TODO: Define any necessary private members
  private:
-  Processor cpu_ = {};
+  Processor cpu_;
   std::vector<Process> processes_ = {};
+  const std::string kernel_string_ = LinuxParser::Kernel();
+  const float kernel_version_ = LinuxParser::Kernel_version(kernel_string_);
+  void initStatic();
 };
 
 #endif
